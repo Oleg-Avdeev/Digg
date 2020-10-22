@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c3b234c87954873a338e6705401e97, type: 3}
+  m_Name: Dirt Layers Info
+  m_EditorClassIdentifier: 
+  TopVariants:
+  - {fileID: -6224410429619551159, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  - {fileID: 7711446426263226812, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  - {fileID: 5509712231387707372, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  MiddleVariants:
+  - {fileID: 4285185840188377049, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  - {fileID: 8355749346602332410, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  - {fileID: 3230059895664381876, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  - {fileID: 8960789074176448079, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  BottomVariants:
+  - {fileID: 7879305007254893167, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  DepthGradient:
+    serializedVersion: 2
+    key0: {r: 0.2784314, g: 0.1764706, b: 0.19763485, a: 1}
+    key1: {r: 0.122641504, g: 0.0989231, b: 0.1126068, a: 1}
+    key2: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 63800
+    ctime2: 65535
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 2
+  TreasureProbability: 0.4
+  TreasureVariants:
+  - {fileID: -1494109973978636815, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  - {fileID: 789480843916294386, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  - {fileID: -1077303268346711651, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  - {fileID: 890503356872400583, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  - {fileID: -3643911719115621106, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  - {fileID: -352614613653852854, guid: 13efdc2d83f63431b90044187a686f66, type: 3}
+  TreasurePrefab: {fileID: 5833553762804346798, guid: 6c43d75ffda8b40b596281ad318ea0ac,
+    type: 3}
