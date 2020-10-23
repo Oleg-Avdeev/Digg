@@ -1,5 +1,5 @@
 
-namespace Pong.Data
+namespace Digg.Data
 {
     public class FieldData
     {

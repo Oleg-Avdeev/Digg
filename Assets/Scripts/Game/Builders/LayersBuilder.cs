@@ -25,19 +25,25 @@ namespace Digg.Game.Builders
             _info = info;
         }
 
-        public LayersQueue BuildLayersQueue()
+        public LayersQueue BuildLayersQueue(int x, int y)
         {
             var queue = new LayersQueue();
             
+            var digs = Data.DataManager.Instance.GetDigsAt(x, y);
+            var treasure = Data.DataManager.Instance.GetTreasureAt(x, y);
+
             for (int i = 0; i < _maxDepth; i++)
             {
-                queue.AddLayer(CreateLayer(_info, i));
+                if (i >= digs)
+                {
+                    queue.AddLayer(CreateLayer(_info, i, digs, treasure));
+                }
             }
 
             return queue;
         }
 
-        public Layer CreateLayer(LayersInfo info, int depth)
+        public Layer CreateLayer(LayersInfo info, int depth, int skip, bool forceTreasure)
         {
             var layer = new DirtLayer();
             
@@ -58,7 +64,7 @@ namespace Digg.Game.Builders
 
             if (depth != 0)
             {
-                if (Random.Range(0f, 1f) < info.TreasureProbability)
+                if (forceTreasure || (skip == 0 && Random.Range(0f, 1f) < info.TreasureProbability))
                 {
                     var treasure = new Treasure();
                     treasure.Initialize(info.TreasureVariants.GetRandomElement(), _treasurePool.GetTreasure);

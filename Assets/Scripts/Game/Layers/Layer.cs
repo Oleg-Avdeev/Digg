@@ -30,6 +30,7 @@ namespace Digg.Game.Layers
         {
             DepthColor = color;
             DecalSprite = decal;
+            
             _isLast = isLast;
         }
 

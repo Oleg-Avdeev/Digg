@@ -1,4 +1,4 @@
-using Pong.Data;
+using Digg.Data;
 using UnityEngine;
 
 namespace Digg.Game.Builders

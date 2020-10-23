@@ -17,6 +17,7 @@ public class Pool<T> where T : PoolBehaviour
             var poolObject = _create.Invoke();
             poolObject.ReturnToPool = ReturnObject;
             _objectPool.Add(poolObject);
+            poolObject.Reset();
         }
 
         for (int i = 0; i < count - 1; i++)
@@ -36,6 +37,7 @@ public class Pool<T> where T : PoolBehaviour
         else
         {
             T poolObject = _create.Invoke();
+            poolObject.Reset();
             poolObject.ReturnToPool = ReturnObject;
             _objectPool.Add(poolObject);
             return poolObject;

@@ -75,7 +75,7 @@ namespace Digg.Game
         private void CreateCell(int x, int y)
         {
             var cell = _cellsPool.BuildCell(_cellsContainer, x, y);
-            cell.SetLayersQueue(_layersBuilder.BuildLayersQueue());
+            cell.SetLayersQueue(_layersBuilder.BuildLayersQueue(x, y), x, y);
             _cells.Add(MathExtension.Pack(x, y), cell);
             cell.Show();
         }

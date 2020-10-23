@@ -11,14 +11,14 @@ namespace Digg.Game.Layers
         
         private TreasureRenderer _currentTreasure;
 
-        public void SetLayer(Layer layer)
+        public void SetLayer(Layer layer, int x, int y)
         {
             _backgroundRenderer.color = layer.DepthColor;
             _spriteRenderer.sprite = layer.DecalSprite;
 
             if (layer.Treasure != null)
             {
-                _currentTreasure = layer.Treasure.Create();
+                _currentTreasure = layer.Treasure.Create(x, y);
                 
                 _currentTreasure.OnCollected += layer.TreasureRemovedCallback;
                 _currentTreasure.OnDropped += ResetTreasurePosition;

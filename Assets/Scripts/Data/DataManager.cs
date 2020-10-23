@@ -1,11 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Pong.Data
+namespace Digg.Data
 {
     public sealed class DataManager : IDataManager
     {
         private const string _fieldKey = "field{0}";
         private const string _playerKey = "player{0}";
+        private const string _digsKey = "_digs{0} {1}";
+        private const string _treasuresKey = "_treasures{0} {1}";
 
         private static IDataManager _instance;
         public static IDataManager Instance
@@ -50,5 +53,35 @@ namespace Pong.Data
             return new PlayerData(shovels, treasures, targetTreasures);
         }
 
+        void IDataManager.AddDig(int x, int y)
+        {
+            var count = PlayerPrefs.GetInt(string.Format(_digsKey, x, y), 0);
+            PlayerPrefs.SetInt(string.Format(_digsKey, x, y), count + 1);  
+        }
+
+        int IDataManager.GetDigsAt(int x, int y)
+        {
+            return PlayerPrefs.GetInt(string.Format(_digsKey, x, y), 0);
+        }
+
+        void IDataManager.AddUncoveredTreasure(int x, int y)
+        {
+            PlayerPrefs.SetInt(string.Format(_treasuresKey, x, y), 1);
+        }
+
+        void IDataManager.RemoveUncoveredTreasure(int x, int y)
+        {
+            PlayerPrefs.SetInt(string.Format(_treasuresKey, x, y), -1);
+        }
+
+        bool IDataManager.GetTreasureAt(int x, int y)
+        {
+            return PlayerPrefs.GetInt(string.Format(_treasuresKey, x, y), -1) != -1;
+        }
+
+        void IDataManager.Reset()
+        {
+            PlayerPrefs.DeleteAll();
+        }
     }
 }

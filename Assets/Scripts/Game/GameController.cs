@@ -1,5 +1,5 @@
 using Digg.Game.Builders;
-using Pong.Data;
+using Digg.Data;
 using UnityEngine;
 
 namespace Digg.Game
@@ -7,6 +7,7 @@ namespace Digg.Game
     public sealed class GameController : MonoBehaviour
     {
         [SerializeField] private FieldBuilder _fieldBuilder = default;
+        [SerializeField] private GameObject _restartButton = default;
         [SerializeField] private Chest _chest = default;
 
         [SerializeField] private CounterUI _treasuresCounter = default;
@@ -24,11 +25,13 @@ namespace Digg.Game
 
         private void Initialize()
         {
+            // PlayerPrefs.DeleteAll();
             _player.OnTreasuresChange += _treasuresCounter.HandleNewValue;
             _player.OnShovelsChange += _shovelsCounter.HandleNewValue;
-            
-            _chest.Initialize();
+            _player.OnGameEnded += HandleGameEnded;
 
+            _chest.Initialize();
+            
             var playerData = DataManager.Instance.GetPlayerData();
             var fieldData = DataManager.Instance.GetFieldData();
             
@@ -45,11 +48,14 @@ namespace Digg.Game
 
         public void BuildRandom()
         {
+            DataManager.Instance.Reset();
+            
             _fieldWidth = Random.Range(1, 10);
             _fieldHeight = Random.Range(1, 10);
             _fieldBuilder.DestroyField();
 
             var fieldData = new FieldData(_fieldWidth, _fieldHeight, _fieldDepth);
+            DataManager.Instance.SetFieldData(fieldData);
             _fieldBuilder.BuildField(fieldData);
         }
 
@@ -59,6 +65,7 @@ namespace Digg.Game
             _fieldHeight = Mathf.Min(20, _fieldHeight + 1);
 
             var fieldData = new FieldData(_fieldWidth, _fieldHeight, _fieldDepth);
+            DataManager.Instance.SetFieldData(fieldData);
             _fieldBuilder.BuildField(fieldData);
         }
 
@@ -68,19 +75,26 @@ namespace Digg.Game
             _fieldHeight = Mathf.Max(1, _fieldHeight - 1);
 
             var fieldData = new FieldData(_fieldWidth, _fieldHeight, _fieldDepth);
+            DataManager.Instance.SetFieldData(fieldData);
             _fieldBuilder.BuildField(fieldData);
         }
 
         public void Restart()
         {
+            DataManager.Instance.Reset();
+
+            _restartButton.gameObject.SetActive(false);
+
             var playerData = new PlayerData(_shovelsCount, 0, _targetTreasures);
-            var fieldData = new FieldData(_fieldWidth, _fieldHeight, _fieldDepth);
-
             _player.Initialize(playerData);
-            _fieldBuilder.BuildField(fieldData);
-
-            DataManager.Instance.SetFieldData(fieldData);
             DataManager.Instance.SetPlayerData(playerData);
+
+            BuildRandom();
+        }
+
+        private void HandleGameEnded()
+        {
+            _restartButton.gameObject.SetActive(true);
         }
     }
 }

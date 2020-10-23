@@ -10,16 +10,19 @@ namespace Digg.Game
         [SerializeField] private Ease _appearEase = default;
 
         private LayersQueue _layersQueue;
+        private int _x;
+        private int _y;
 
-        public void SetLayersQueue(LayersQueue layersQueue)
+        public void SetLayersQueue(LayersQueue layersQueue, int x, int y)
         {
+            _x = x; _y = y;
             _layersQueue = layersQueue;
             RenderNewLayer();
         }
 
         public void RenderNewLayer()
         {
-            _layerRenderer.SetLayer(_layersQueue.GetCurrentLayer());
+            _layerRenderer.SetLayer(_layersQueue.GetCurrentLayer(), _x, _y);
         }
 
         private void OnMouseDown()
@@ -30,6 +33,8 @@ namespace Digg.Game
                 {
                     _layersQueue.RemoveLayer();
                     RenderNewLayer();
+
+                    Data.DataManager.Instance.AddDig(_x, _y);
                 }
             }
         }
@@ -44,7 +49,7 @@ namespace Digg.Game
         public override void Reset()
         {
             gameObject.SetActive(false);
-            _layersQueue.Destroy();
+            _layersQueue?.Destroy();
             _layersQueue = null;
         }
     }

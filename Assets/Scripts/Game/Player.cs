@@ -1,4 +1,4 @@
-using Pong.Data;
+using Digg.Data;
 using System;
 
 namespace Digg.Game
@@ -15,39 +15,53 @@ namespace Digg.Game
 
         public event Action<int> OnShovelsChange;
         public event Action<int> OnTreasuresChange;
+        public event Action OnGameEnded;
 
-        private int _shovelsLeft = 0;
-        private int _treasuresTarget = 0;
-        private int _treasuresCounter = 0;
+        private PlayerData _playerData;
 
         public void Initialize(PlayerData data)
         {
             Instance = this;
+            _playerData = data;
             
-            _shovelsLeft = data.Shovels;
-            _treasuresCounter = data.Treasures;
-            _treasuresTarget = data.TargetTreasures;
-            
-            OnShovelsChange?.Invoke(_shovelsLeft);
+            OnShovelsChange?.Invoke(_playerData.Shovels);
+            OnTreasuresChange?.Invoke(_playerData.Treasures);
+
+            if (_playerData.Treasures >= _playerData.TargetTreasures)
+            {
+                OnGameEnded?.Invoke();
+            }
         }
 
         void IPlayer.AddTreasure()
         {
-            _treasuresCounter++;
-            OnTreasuresChange?.Invoke(_treasuresCounter);
+            _playerData.Treasures++;
+            OnTreasuresChange?.Invoke(_playerData.Treasures);
+            DataManager.Instance.SetPlayerData(_playerData);
+            
+            if (_playerData.Treasures >= _playerData.TargetTreasures)
+            {
+                OnGameEnded?.Invoke();
+            }
         }
 
         bool IPlayer.TryUseShovel()
         {
-            if (_shovelsLeft > 0)
+            if (_playerData.Treasures >= _playerData.TargetTreasures)
             {
-                _shovelsLeft--;
-                OnShovelsChange?.Invoke(_shovelsLeft);
+                return false;  
+            }
+
+            if (_playerData.Shovels > 0)
+            {
+                _playerData.Shovels--;
+                OnShovelsChange?.Invoke(_playerData.Shovels);
+                DataManager.Instance.SetPlayerData(_playerData);
                 return true;
             }
             else
             {
-
+                OnGameEnded?.Invoke();
                 return false;
             }
         }
