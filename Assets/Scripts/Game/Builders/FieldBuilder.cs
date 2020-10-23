@@ -1,3 +1,4 @@
+using Pong.Data;
 using UnityEngine;
 
 namespace Digg.Game.Builders
@@ -7,10 +8,10 @@ namespace Digg.Game.Builders
         [SerializeField] private Field _field = default;
         [SerializeField] private LayersInfo _dirtInfo = default;
 
-        public void BuildField(int width, int height, int depth)
+        public void BuildField(FieldData data)
         {
-            var dirtLayersBuilder = new LayersBuilder(_dirtInfo, depth);
-            _field.ResizeField(width, height, dirtLayersBuilder);
+            var dirtLayersBuilder = new LayersBuilder(_dirtInfo, data.Depth);
+            _field.ResizeField(data.Width, data.Height, dirtLayersBuilder);
         }
 
         public void DestroyField()

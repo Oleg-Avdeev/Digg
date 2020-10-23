@@ -1,4 +1,5 @@
 using Digg.Game.Builders;
+using Pong.Data;
 using UnityEngine;
 
 namespace Digg.Game
@@ -12,6 +13,7 @@ namespace Digg.Game
         [SerializeField] private CounterUI _shovelsCounter = default;
 
         [SerializeField] private int _shovelsCount = 0;
+        [SerializeField] private int _targetTreasures = 5;
         [SerializeField] [Range(1, 20)] private int _fieldWidth = 5;
         [SerializeField] [Range(1, 20)] private int _fieldHeight = 5;
         [SerializeField] [Range(1, 20)] private int _fieldDepth = 10;
@@ -26,8 +28,19 @@ namespace Digg.Game
             _player.OnShovelsChange += _shovelsCounter.HandleNewValue;
             
             _chest.Initialize();
-            _player.Initialize(_shovelsCount);
-            _fieldBuilder.BuildField(_fieldWidth, _fieldHeight, _fieldDepth);
+
+            var playerData = DataManager.Instance.GetPlayerData();
+            var fieldData = DataManager.Instance.GetFieldData();
+            
+            if (playerData != null && fieldData != null)
+            {
+                _player.Initialize(playerData);
+                _fieldBuilder.BuildField(fieldData);
+            }
+            else
+            {
+                Restart();
+            }
         }
 
         public void BuildRandom()
@@ -35,21 +48,39 @@ namespace Digg.Game
             _fieldWidth = Random.Range(1, 10);
             _fieldHeight = Random.Range(1, 10);
             _fieldBuilder.DestroyField();
-            _fieldBuilder.BuildField(_fieldWidth, _fieldHeight, _fieldDepth);
+
+            var fieldData = new FieldData(_fieldWidth, _fieldHeight, _fieldDepth);
+            _fieldBuilder.BuildField(fieldData);
         }
 
         public void GrowField()
         {
             _fieldWidth = Mathf.Min(20, _fieldWidth + 1);
             _fieldHeight = Mathf.Min(20, _fieldHeight + 1);
-            _fieldBuilder.BuildField(_fieldWidth, _fieldHeight, _fieldDepth);
+
+            var fieldData = new FieldData(_fieldWidth, _fieldHeight, _fieldDepth);
+            _fieldBuilder.BuildField(fieldData);
         }
 
         public void ShrinkField()
         {
             _fieldWidth = Mathf.Max(1, _fieldWidth - 1);
             _fieldHeight = Mathf.Max(1, _fieldHeight - 1);
-            _fieldBuilder.BuildField(_fieldWidth, _fieldHeight, _fieldDepth);
+
+            var fieldData = new FieldData(_fieldWidth, _fieldHeight, _fieldDepth);
+            _fieldBuilder.BuildField(fieldData);
+        }
+
+        public void Restart()
+        {
+            var playerData = new PlayerData(_shovelsCount, 0, _targetTreasures);
+            var fieldData = new FieldData(_fieldWidth, _fieldHeight, _fieldDepth);
+
+            _player.Initialize(playerData);
+            _fieldBuilder.BuildField(fieldData);
+
+            DataManager.Instance.SetFieldData(fieldData);
+            DataManager.Instance.SetPlayerData(playerData);
         }
     }
 }
