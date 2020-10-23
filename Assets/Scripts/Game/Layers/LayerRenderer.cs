@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Digg.Game.Teasures;
 using UnityEngine;
 
 namespace Digg.Game.Layers
@@ -7,6 +8,8 @@ namespace Digg.Game.Layers
     {
         [SerializeField] private SpriteRenderer _backgroundRenderer = default;
         [SerializeField] private SpriteRenderer _spriteRenderer = default;
+        
+        private Treasure _currentTreasure;
 
         public void SetLayer(Layer layer)
         {
@@ -15,14 +18,26 @@ namespace Digg.Game.Layers
 
             if (layer.TreasureSprite != null)
             {
-                var treasure = Instantiate(layer.TreasurePrefab);
-                treasure.transform.SetParent(transform, false);
-                treasure.transform.localPosition = Vector3.zero;
-                treasure.SetSprite(layer.TreasureSprite);
-                treasure.SetOnCollectedCallback(layer.TreasureRemovedCallback);
+                _currentTreasure = Instantiate(layer.TreasurePrefab);
+                _currentTreasure.SetOnCollectedCallback(layer.TreasureRemovedCallback);
+                _currentTreasure.SetSprite(layer.TreasureSprite);
+                
+                _currentTreasure.OnDropped += ResetTreasurePosition;
+                _currentTreasure.OnDropped += HideDecal;
+                _currentTreasure.OnPickUp += ShowDecal;
 
-                _spriteRenderer.sprite = null;
+                ResetTreasurePosition();
+                HideDecal();
             }
+        }
+
+        private void ShowDecal() => _spriteRenderer.enabled = true;
+        private void HideDecal() => _spriteRenderer.enabled = false;
+        
+        private void ResetTreasurePosition()
+        {
+            _currentTreasure.transform.SetParent(transform, false);
+            _currentTreasure.transform.localPosition = Vector3.zero;
         }
     }
 }

@@ -6,6 +6,9 @@ namespace Digg.Game.Teasures
 {
     public sealed class Treasure : MonoBehaviour
     {
+        public event Action OnPickUp;
+        public event Action OnDropped;
+
         [SerializeField] private SpriteRenderer _renderer = default;
         [SerializeField] private Collider2D _collider = default;
         [SerializeField] private float _sizeCoefficient = 1.5f;
@@ -37,6 +40,7 @@ namespace Digg.Game.Teasures
             transform.localScale = Vector3.one * _sizeCoefficient;
             _material.SetFloat("_Highlight", 1f);
             _collider.enabled = false;
+            OnPickUp?.Invoke();
             Chest.Instance.Open();
         }
 
@@ -53,6 +57,12 @@ namespace Digg.Game.Teasures
             {
                 gameObject.SetActive(false);
                 Player.Instance.AddTreasure();
+                OnPickUp = null;
+                OnDropped = null;
+            }
+            else
+            {
+                OnDropped?.Invoke();
             }
         }
 

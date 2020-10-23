@@ -25,7 +25,6 @@ namespace Digg.Game
 
             float scale = Mathf.Min(worldWidth / fieldWidth, worldHeight / fieldHeight);
 
-            Debug.Log($"Rescaled: {width}x{height} -> {scale}");
             _cellsContainer.localScale = Vector3.one * scale;
             _cellsContainer.localPosition = -(_cellSize * scale / 2f) * new Vector3(width - 1, height - 1, 0);
 

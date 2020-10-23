@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Digg.Game
 {
-    public sealed class Cell : MonoBehaviour
+    public sealed class Cell : PoolBehaviour
     {
         [SerializeField] private LayerRenderer _layerRenderer = default;
 
@@ -20,11 +20,6 @@ namespace Digg.Game
             _layerRenderer.SetLayer(_layersQueue.GetCurrentLayer());
         }
 
-        public void Destroy()
-        {
-            Destroy(gameObject);
-        }
-
         private void OnMouseDown()
         {
             if (_layersQueue.GetCurrentLayer().CanRemove())
@@ -35,6 +30,11 @@ namespace Digg.Game
                     RenderNewLayer();
                 }
             }
+        }
+
+        public override void Reset()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

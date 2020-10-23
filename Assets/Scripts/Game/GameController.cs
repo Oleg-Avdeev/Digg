@@ -16,8 +16,6 @@ namespace Digg.Game
         [SerializeField] private int _fieldHeight = 5;
         [SerializeField] private int _fieldDepth = 10;
 
-
-
         private Player _player = new Player();
 
         private void Start() => Initialize();
@@ -34,17 +32,24 @@ namespace Digg.Game
 
         public void BuildRandom()
         {
-
+            _fieldWidth = Random.Range(1, 10);
+            _fieldHeight = Random.Range(1, 10);
+            _fieldBuilder.DestroyField();
+            _fieldBuilder.BuildField(_fieldWidth, _fieldHeight, _fieldDepth);
         }
 
         public void GrowField()
         {
-
+            _fieldWidth++;
+            _fieldHeight++;
+            _fieldBuilder.BuildField(_fieldWidth, _fieldHeight, _fieldDepth);
         }
 
         public void ShrinkField()
         {
-            
+            _fieldWidth--;
+            _fieldHeight--;
+            _fieldBuilder.BuildField(_fieldWidth, _fieldHeight, _fieldDepth);
         }
     }
 }

@@ -12,5 +12,10 @@ namespace Digg.Game.Builders
             var dirtLayersBuilder = new LayersBuilder(_dirtInfo, depth);
             _field.ResizeField(width, height, dirtLayersBuilder);
         }
+
+        public void DestroyField()
+        {
+            _field.Destroy();
+        }
     }
 }

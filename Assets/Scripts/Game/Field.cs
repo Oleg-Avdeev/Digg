@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Digg.Game.Builders;
+using Digg.Game.Pools;
 using UnityEngine;
 using System;
 
@@ -9,15 +10,17 @@ namespace Digg.Game
     {
         [SerializeField] private FieldScaler _fieldScaler = default;
         [SerializeField] private Transform _cellsContainer = default;
-        [SerializeField] private Cell _cellPrefab = default;
+        [SerializeField] private CellPool _cellsPool = default;
 
-        private Dictionary<Vector2Int, Cell> _cells = new Dictionary<Vector2Int, Cell>();
+        private Dictionary<int, Cell> _cells = new Dictionary<int, Cell>();
         private LayersBuilder _layersBuilder;
         private int _currentWidth = 0;
         private int _currentHeight = 0;
 
         public void ResizeField(int width, int height, LayersBuilder layersBuilder)
         {
+            _cellsPool.Initialize();
+
             _layersBuilder = layersBuilder;
 
             if (_currentWidth == 0)
@@ -35,10 +38,22 @@ namespace Digg.Game
             _currentWidth = width;
         }
 
+        public void Destroy()
+        {
+            _layersBuilder = null;
+            _currentHeight = 0;
+            _currentWidth = 0;
+
+            foreach (var kvp in _cells)
+                kvp.Value.Free();
+
+            _cells.Clear();
+        }
+
         private void ChangeSize(int sizeMainAxis, int sizeCoAxis, int deltaMainAxis, bool horizontal)
         {
             if (deltaMainAxis == 0) return;
-            if (sizeCoAxis == 0) sizeCoAxis = 1;
+            if (deltaMainAxis < 0) sizeMainAxis--;
 
             for (int i = 0; i < Mathf.Abs(deltaMainAxis); i++)
             {
@@ -59,20 +74,19 @@ namespace Digg.Game
 
         private void CreateCell(int x, int y)
         {
-            var cell = Instantiate(_cellPrefab, Vector3.zero, Quaternion.identity, _cellsContainer);
-            cell.transform.localPosition = new Vector3(x, y, 0) * 1.1f;
+            var cell = _cellsPool.BuildCell(_cellsContainer, x, y);
             cell.SetLayersQueue(_layersBuilder.BuildLayersQueue());
-            _cells.Add(new Vector2Int(x, y), cell);
+            _cells.Add(MathExtension.Pack(x, y), cell);
         }
 
         private void DestroyCell(int x, int y)
         {
-            var point = new Vector2Int(x, y);
-            if (_cells.ContainsKey(point))
+            var key = MathExtension.Pack(x, y);
+            if (_cells.ContainsKey(key))
             {
-                var cell = _cells[point];
-                _cells.Remove(point);
-                cell.Destroy();
+                var cell = _cells[key];
+                _cells.Remove(key);
+                cell.Free();
             }
         }
     }

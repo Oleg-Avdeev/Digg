@@ -279,6 +279,7 @@ GameObject:
   - component: {fileID: 172635784}
   - component: {fileID: 172635782}
   - component: {fileID: 172635781}
+  - component: {fileID: 172635785}
   m_Layer: 0
   m_Name: Game Field
   m_TagString: Untagged
@@ -318,8 +319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fieldScaler: {fileID: 172635781}
   _cellsContainer: {fileID: 1832943943}
-  _cellPrefab: {fileID: 6842497200460530324, guid: 4c8e8714ab7214883a14c6ac2ad6e21b,
-    type: 3}
+  _cellsPool: {fileID: 172635785}
 --- !u!4 &172635783
 Transform:
   m_ObjectHideFlags: 0
@@ -349,6 +349,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _field: {fileID: 172635782}
   _dirtInfo: {fileID: 11400000, guid: e05852b75b7e04a7a9066c2ae8ec9f3d, type: 2}
+--- !u!114 &172635785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172635780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c08a4489c33004613b5613b89b03f8ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cellPrefab: {fileID: 6842497200460530324, guid: 4c8e8714ab7214883a14c6ac2ad6e21b,
+    type: 3}
+  _startCount: 35
 --- !u!1 &321010323
 GameObject:
   m_ObjectHideFlags: 0
