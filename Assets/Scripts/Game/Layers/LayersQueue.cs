@@ -24,5 +24,15 @@ namespace Digg.Game.Layers
         {
             _layers.Dequeue();
         }
+
+        public void Destroy()
+        {
+            foreach(var layer in _layers)
+            {
+                layer.Destroy();
+            }
+            
+            _layers.Clear();
+        }
     }
 }

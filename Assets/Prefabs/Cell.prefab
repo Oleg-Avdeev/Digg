@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _layerRenderer: {fileID: 8924260702967808050}
+  _appearEase: 30
 --- !u!114 &8924260702967808050
 MonoBehaviour:
   m_ObjectHideFlags: 0

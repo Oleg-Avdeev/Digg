@@ -77,6 +77,7 @@ namespace Digg.Game
             var cell = _cellsPool.BuildCell(_cellsContainer, x, y);
             cell.SetLayersQueue(_layersBuilder.BuildLayersQueue());
             _cells.Add(MathExtension.Pack(x, y), cell);
+            cell.Show();
         }
 
         private void DestroyCell(int x, int y)

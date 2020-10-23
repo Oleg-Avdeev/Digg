@@ -1,11 +1,13 @@
 using Digg.Game.Layers;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Digg.Game
 {
     public sealed class Cell : PoolBehaviour
     {
         [SerializeField] private LayerRenderer _layerRenderer = default;
+        [SerializeField] private Ease _appearEase = default;
 
         private LayersQueue _layersQueue;
 
@@ -32,9 +34,18 @@ namespace Digg.Game
             }
         }
 
+        public void Show()
+        {
+            gameObject.SetActive(true);
+            transform.localScale = Vector3.zero;
+            transform.DOScale(Vector3.one, 0.5f).SetEase(_appearEase);
+        }
+
         public override void Reset()
         {
             gameObject.SetActive(false);
+            _layersQueue.Destroy();
+            _layersQueue = null;
         }
     }
 }

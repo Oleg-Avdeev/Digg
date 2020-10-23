@@ -32,7 +32,6 @@ namespace Digg.Game.Pools
         public Cell GetCell()
         {
             var cell = _cellsPool.GetObject();
-            cell.gameObject.SetActive(true);
             return cell;
         }
 
