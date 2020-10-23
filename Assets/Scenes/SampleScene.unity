@@ -1624,7 +1624,7 @@ MonoBehaviour:
   _shovelsCount: 10
   _fieldWidth: 7
   _fieldHeight: 5
-  _fieldDepth: 10
+  _fieldDepth: 5
 --- !u!1 &1667656328
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,12 +5,11 @@ namespace Digg.Game.Layers
     {
         public override bool CanRemove()
         {
-            return !_hasTreasure;
+            return !_hasTreasure && base.CanRemove();
         }
 
         public override void Destroy()
         {
         }
-
     }
 }
