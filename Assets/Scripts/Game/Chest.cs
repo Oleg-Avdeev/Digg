@@ -3,6 +3,11 @@ using DG.Tweening;
 
 namespace Digg.Game
 {
+
+    // For a singular chest a singleton is a tolerable solution IMO
+    // In future a reference to the chest can be used
+    // during treasure pool initialization
+
     public sealed class Chest : MonoBehaviour
     {
         public static Chest Instance { get; private set; }
