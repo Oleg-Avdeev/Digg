@@ -39,5 +39,10 @@ namespace Digg.Game.Layers
             _currentTreasure.transform.SetParent(transform, false);
             _currentTreasure.transform.localPosition = Vector3.zero;
         }
+
+        public void Reset()
+        {
+            _currentTreasure?.Free();
+        }
     }
 }

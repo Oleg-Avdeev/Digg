@@ -49,6 +49,7 @@ namespace Digg.Game
         public override void Reset()
         {
             gameObject.SetActive(false);
+            _layerRenderer.Reset();
             _layersQueue?.Destroy();
             _layersQueue = null;
         }
