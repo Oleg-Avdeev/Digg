@@ -1621,7 +1621,7 @@ MonoBehaviour:
   _chest: {fileID: 905224673}
   _treasuresCounter: {fileID: 412598683}
   _shovelsCounter: {fileID: 1667656332}
-  _shovelsCount: 10
+  _shovelsCount: 90
   _fieldWidth: 7
   _fieldHeight: 5
   _fieldDepth: 5

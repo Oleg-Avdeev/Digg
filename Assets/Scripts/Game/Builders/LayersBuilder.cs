@@ -1,4 +1,6 @@
 using Digg.Game.Layers;
+using Digg.Game.Pools;
+using Digg.Game.Teasures;
 using UnityEngine;
 
 namespace Digg.Game.Builders
@@ -12,11 +14,13 @@ namespace Digg.Game.Builders
 
     public sealed class LayersBuilder
     {
+        private TreasurePool _treasurePool;
         private LayersInfo _info;
         private int _maxDepth;
 
         public LayersBuilder(LayersInfo info, int depth)
         {
+            _treasurePool = new TreasurePool(info.TreasurePrefab, 5);
             _maxDepth = depth;
             _info = info;
         }
@@ -56,7 +60,9 @@ namespace Digg.Game.Builders
             {
                 if (Random.Range(0f, 1f) < info.TreasureProbability)
                 {
-                    layer.SetTreasure(info.TreasurePrefab, info.TreasureVariants.GetRandomElement());
+                    var treasure = new Treasure();
+                    treasure.Initialize(info.TreasureVariants.GetRandomElement(), _treasurePool.GetTreasure);
+                    layer.SetTreasure(treasure);
                 }
             }
 

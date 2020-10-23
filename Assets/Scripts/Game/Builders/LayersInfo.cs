@@ -15,6 +15,6 @@ namespace Digg.Game.Builders
         [Range(0,1)] 
         public float TreasureProbability = default;
         public Sprite[] TreasureVariants = default;
-        public Treasure TreasurePrefab = default;
+        public TreasureRenderer TreasurePrefab = default;
     }
 }

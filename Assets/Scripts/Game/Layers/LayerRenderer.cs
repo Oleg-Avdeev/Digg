@@ -9,22 +9,22 @@ namespace Digg.Game.Layers
         [SerializeField] private SpriteRenderer _backgroundRenderer = default;
         [SerializeField] private SpriteRenderer _spriteRenderer = default;
         
-        private Treasure _currentTreasure;
+        private TreasureRenderer _currentTreasure;
 
         public void SetLayer(Layer layer)
         {
             _backgroundRenderer.color = layer.DepthColor;
             _spriteRenderer.sprite = layer.DecalSprite;
 
-            if (layer.TreasureSprite != null)
+            if (layer.Treasure != null)
             {
-                _currentTreasure = Instantiate(layer.TreasurePrefab);
-                _currentTreasure.SetOnCollectedCallback(layer.TreasureRemovedCallback);
-                _currentTreasure.SetSprite(layer.TreasureSprite);
+                _currentTreasure = layer.Treasure.Create();
                 
+                _currentTreasure.OnCollected += layer.TreasureRemovedCallback;
                 _currentTreasure.OnDropped += ResetTreasurePosition;
                 _currentTreasure.OnDropped += HideDecal;
                 _currentTreasure.OnPickUp += ShowDecal;
+                _currentTreasure.Show();
 
                 ResetTreasurePosition();
                 HideDecal();

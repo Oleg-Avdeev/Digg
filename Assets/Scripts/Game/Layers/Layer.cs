@@ -15,16 +15,14 @@ namespace Digg.Game.Layers
     {
         public Sprite DecalSprite { get; private set; }
         public Color DepthColor { get; private set; }
-        public Treasure TreasurePrefab { get; private set; }
-        public Sprite TreasureSprite { get; private set; }
+        public Treasure Treasure { get; private set; }
 
         protected bool _hasTreasure = false;
         protected bool _isLast = false;
 
-        public void SetTreasure(Treasure prefab, Sprite sprite)
+        public void SetTreasure(Treasure treasure)
         {
-            TreasurePrefab = prefab;
-            TreasureSprite = sprite;
+            Treasure = treasure;
             _hasTreasure = true;
         }
 
