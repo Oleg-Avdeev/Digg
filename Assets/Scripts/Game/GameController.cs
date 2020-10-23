@@ -12,9 +12,9 @@ namespace Digg.Game
         [SerializeField] private CounterUI _shovelsCounter = default;
 
         [SerializeField] private int _shovelsCount = 0;
-        [SerializeField] private int _fieldWidth = 5;
-        [SerializeField] private int _fieldHeight = 5;
-        [SerializeField] private int _fieldDepth = 10;
+        [SerializeField] [Range(1, 20)] private int _fieldWidth = 5;
+        [SerializeField] [Range(1, 20)] private int _fieldHeight = 5;
+        [SerializeField] [Range(1, 20)] private int _fieldDepth = 10;
 
         private Player _player = new Player();
 
@@ -40,15 +40,15 @@ namespace Digg.Game
 
         public void GrowField()
         {
-            _fieldWidth++;
-            _fieldHeight++;
+            _fieldWidth = Mathf.Min(20, _fieldWidth + 1);
+            _fieldHeight = Mathf.Min(20, _fieldHeight + 1);
             _fieldBuilder.BuildField(_fieldWidth, _fieldHeight, _fieldDepth);
         }
 
         public void ShrinkField()
         {
-            _fieldWidth--;
-            _fieldHeight--;
+            _fieldWidth = Mathf.Max(1, _fieldWidth - 1);
+            _fieldHeight = Mathf.Max(1, _fieldHeight - 1);
             _fieldBuilder.BuildField(_fieldWidth, _fieldHeight, _fieldDepth);
         }
     }
