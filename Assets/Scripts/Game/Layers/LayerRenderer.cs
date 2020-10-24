@@ -43,6 +43,7 @@ namespace Digg.Game.Layers
         public void Reset()
         {
             _currentTreasure?.Free();
+            ShowDecal();
         }
     }
 }

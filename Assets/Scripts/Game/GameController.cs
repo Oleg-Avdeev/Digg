@@ -81,15 +81,13 @@ namespace Digg.Game
 
         public void Restart()
         {
-            DataManager.Instance.Reset();
-
             _restartButton.gameObject.SetActive(false);
+
+            BuildRandom();
 
             var playerData = new PlayerData(_shovelsCount, 0, _targetTreasures);
             _player.Initialize(playerData);
             DataManager.Instance.SetPlayerData(playerData);
-
-            BuildRandom();
         }
 
         private void HandleGameEnded()
